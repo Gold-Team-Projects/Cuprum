@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Net.Http;
+using System.Numerics;
 
 namespace Cuprum;
 
@@ -26,7 +27,7 @@ internal static class Functions
     internal static int GetNodeBucketIndex(BigInteger id1, BigInteger id2)
     {
         BigInteger dist = XOR(id1, id2);
-        return Math.Min(dist, 256 - 1)
+        return Math.Min((int)dist, 256 - 1);
     }
 
     internal static async Task<string> GetIPAddress()

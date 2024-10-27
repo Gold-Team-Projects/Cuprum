@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Crytography;
+using System.Security.Cryptography;
 using System.Text;
+using System.Numerics;
 using static Cuprum.Functions;
 
 namespace Cuprum
@@ -30,7 +31,7 @@ namespace Cuprum
         {
             while (!Initialized) await Task.Delay(50);
 
-            RootPath = Environment.GetEnvironmentVariable("CPRM_PATH");
+            RootPath = Environment.GetEnvironmentVariable("CPRM_PATH")!;
             DataPath = $"{RootPath}/data.json";
 
             
@@ -38,7 +39,7 @@ namespace Cuprum
 
         internal static void AddNode(string ip)
         {
-            Buckets[GetNoddBucketIndex(ID, ComputeKey(ip))].AddNode(ip);
+            Buckets[GetNodeBucketIndex(ID, ComputeKey(ip))].AddNode(ip);
         }
 
         internal struct Data 
