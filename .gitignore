@@ -2,3 +2,5 @@
 .vscode
 **/obj
 **/bin
+/Node/UpgradeLog.htm
+/Node/Backup
