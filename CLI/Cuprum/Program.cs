@@ -15,7 +15,7 @@ namespace Cuprum
         public async static Task<int> Main()
         {
             AnsiConsole.WriteLine("[red]Cuprum[/] is starting...");
-
+            
             return 0;
         }
     }
