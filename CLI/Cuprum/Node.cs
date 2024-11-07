@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Numerics;
+using Spectre.Console.Cli;
 using static Cuprum.Functions;
 
 namespace Cuprum
@@ -22,4 +23,25 @@ namespace Cuprum
         internal struct Data 
         {}
     }
+
+    internal class NodeSettings : CommandSettings
+    {
+
+    }
+
+    internal class StartNodeCommand : Command<NodeSettings>
+	{
+		public override int Execute(CommandContext context, NodeSettings settings)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	internal class StopNodeCommand : Command<NodeSettings>
+	{
+		public override int Execute(CommandContext context, NodeSettings settings)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

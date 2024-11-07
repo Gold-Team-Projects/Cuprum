@@ -15,8 +15,17 @@ namespace Cuprum
         public async static Task<int> Main()
         {
             AnsiConsole.WriteLine("[red]Cuprum[/] is starting...");
-            
-            return 0;
+
+            var app = new CommandApp();
+            app.Configure(config =>
+            {
+                config.AddBranch<NodeSettings>("node", add =>
+                {
+                    add.AddCommand<StartNodeCommand>("start");
+                    add.AddCommand<StopNodeCommand>("stop");
+				});
+            });
+			return 0;
         }
     }
 }
