@@ -12,9 +12,9 @@ namespace Cuprum
 {
     public static class Program 
     {
-        public async static Task<int> Main()
+        public static int Main(string[] args)
         {
-            AnsiConsole.WriteLine("[red]Cuprum[/] is starting...");
+            AnsiConsole.MarkupLine("[red]Cuprum[/] is starting...");
 
             var app = new CommandApp();
             app.Configure(config =>
@@ -23,8 +23,14 @@ namespace Cuprum
                 {
                     add.AddCommand<StartNodeCommand>("start");
                     add.AddCommand<StopNodeCommand>("stop");
-				});
-            });
+                });
+                config.AddBranch<ClientSettings>("client", add =>
+                {
+                    add.AddCommand<ClientUICommand>("ui");
+					add.AddCommand<ClientCreateCommand>("create");
+                });
+			});
+            app.Run(args);
 			return 0;
         }
     }

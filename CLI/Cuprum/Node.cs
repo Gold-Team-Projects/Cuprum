@@ -23,25 +23,4 @@ namespace Cuprum
         internal struct Data 
         {}
     }
-
-    internal class NodeSettings : CommandSettings
-    {
-
-    }
-
-    internal class StartNodeCommand : Command<NodeSettings>
-	{
-		public override int Execute(CommandContext context, NodeSettings settings)
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	internal class StopNodeCommand : Command<NodeSettings>
-	{
-		public override int Execute(CommandContext context, NodeSettings settings)
-		{
-			throw new NotImplementedException();
-		}
-	}
 }
