@@ -57,8 +57,9 @@ internal class TCPConnection
         var stream = _client.GetStream();
         int unresolved = 0;
         List<byte> output = new();
+        bool first = true;
 
-        while (unresolved != 0)
+        while (unresolved != 0 && !first)
         {
             byte[] buffer = new byte[1024];
             stream.Read(buffer);
@@ -67,6 +68,7 @@ internal class TCPConnection
             int lasts = str.Count(c => c == '}');
             unresolved += firsts - lasts;
             output.AddRange(buffer);
+            first = false;
         }
 
         string json = Encoding.UTF8.GetString(output.ToArray());

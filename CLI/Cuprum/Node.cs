@@ -35,8 +35,13 @@ namespace Cuprum
             PingMessage pong = conn.ReadMessage<PingMessage>();
 
             BigInteger id = pong.Sender;
-            
-        }
+            ID = pong.Reciever;
+
+            conn.Write(new RequestMessage(ID, id, new()));
+            Message msg = conn.ReadMessage<Message>();
+
+            if (msg.Type == MessageType.Error) throw new Exception("Network denied access: " + ((ErrorMessage)msg).Error))
+		}
 
         internal static void AddNode(string ip)
         {

@@ -12,7 +12,8 @@ namespace Cuprum;
 internal enum MessageType
 {
     Ping, Pong,
-
+	Acknowledge, Request,
+	Error
 }
 
 internal class Message 
@@ -21,4 +22,12 @@ internal class Message
     internal BigInteger Sender { get; set; }
     internal BigInteger Reciever { get; set; }
     internal DateTime Time { get; set; }
+
+    internal void Initialize(BigInteger sender, BigInteger reciever, MessageType type)
+	{
+		Sender = sender;
+		Reciever = reciever;
+		Type = type;
+		Time = DateTime.Now;
+	}
 }
