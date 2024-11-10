@@ -13,7 +13,8 @@ internal enum MessageType
 {
     Ping, Pong,
 	Acknowledge, Request,
-	Error
+	Error,
+	Bootstrap
 }
 
 internal class Message 

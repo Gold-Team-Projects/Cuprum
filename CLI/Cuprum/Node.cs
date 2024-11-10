@@ -40,8 +40,21 @@ namespace Cuprum
             conn.Write(new RequestMessage(ID, id, new()));
             Message msg = conn.ReadMessage<Message>();
 
-            if (msg.Type == MessageType.Error) throw new Exception("Network denied access: " + ((ErrorMessage)msg).Error))
+            if (msg.Type == MessageType.Error) throw new Exception("Network denied access: " + ((ErrorMessage)msg).Error);
+
+            msg = await conn.WaitForMessageAsync<Message>();
+			if (msg.Type == MessageType.Error) throw new Exception("Network denied access: " + ((ErrorMessage)msg).Error);
+
+			((BootstrapMessage)msg).Nodes.Add(bootstrap);
+			List<string> nodes = ((BootstrapMessage)msg).Nodes;
+
+            foreach (string node in nodes) AddNode(node);
 		}
+
+        internal async static Task Discover()
+        {
+
+        }
 
         internal static void AddNode(string ip)
         {
@@ -51,6 +64,8 @@ namespace Cuprum
     
     internal struct NodeData 
     {
-        
+        public BigInteger ID { get; set; }
+        public string IP { get; set; }
+
     }
 }

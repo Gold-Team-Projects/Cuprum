@@ -74,4 +74,19 @@ internal class TCPConnection
         string json = Encoding.UTF8.GetString(output.ToArray());
         return JsonSerializer.Deserialize<T>(json)!;
     }
+
+	public async Task<T> WaitForMessageAsync<T>()
+	{
+		var stream = _client.GetStream();
+		while (!stream.DataAvailable)
+		{
+			await Task.Delay(50);
+		}
+		return ReadMessage<T>();
+	}
+
+	public void Close()
+    {
+        _client.Close();
+	}
 }
