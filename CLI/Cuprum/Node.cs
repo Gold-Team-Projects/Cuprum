@@ -4,13 +4,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Numerics;
 using Spectre.Console.Cli;
-using static Cuprum.Utilities.Functions;
+using static Cuprum.Functions;
+using System.Linq.Expressions;
+using Cuprum.Utilities;
+using Cuprum.Messages;
 
 namespace Cuprum
 {
     internal static class Node 
     {
-        internal static string ID { get; set; } = "";
+        internal static BigInteger ID { get; set; } = new(-1);
         internal static List<KBucket> Buckets { get; set; } = new();
 
         internal static float DiscoveryInterval { get; set;} = 0.001f;
@@ -26,6 +29,13 @@ namespace Cuprum
                     bootstrap = content[ChooseRandom(0, content.Length)];
                 }
             }
+
+            TCPConnection conn = new(bootstrap, 2031);
+            conn.Write(new PingMessage(ID, new(-1)));
+            PingMessage pong = conn.ReadMessage<PingMessage>();
+
+            BigInteger id = pong.Sender;
+            
         }
 
         internal static void AddNode(string ip)

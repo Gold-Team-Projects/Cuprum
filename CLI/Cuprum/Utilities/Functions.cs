@@ -74,5 +74,11 @@ internal static class Functions
             return BitConverter.ToString(hash).Replace("-", "");
         }
     }
+
+    internal static int ChooseRandom(int start=0, int stop=int.MaxValue)
+    {
+        Random rand = new();
+        return rand.Next(start, stop);
+    }
 }
 

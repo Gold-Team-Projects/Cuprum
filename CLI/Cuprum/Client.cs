@@ -7,8 +7,9 @@ using Spectre.Console.Cli;
 using Spectre.Console;
 using System.Text.Json;
 using System.Net.Security;
-using static Cuprum.Utilities.Functions;
-using static Cuprum.Utilities.Classes;
+using static Cuprum.Functions;
+using static Cuprum.Classes;
+using System.Numerics;
 
 namespace Cuprum
 {
@@ -42,7 +43,7 @@ namespace Cuprum
 			{
 				Name = name,
 				Username = username,
-				Public = HashSHA256(username),
+				Public = ComputeKey(username),
 			};
 
 			string json = JsonSerializer.Serialize(data);
@@ -58,7 +59,7 @@ namespace Cuprum
 	{
 		public string Name { get; set; }
 		public string Username { get; set; }
-		public string Public { get; set; }
+		public BigInteger Public { get; set; }
 		public string Private { get; set; }
 	}
 }
