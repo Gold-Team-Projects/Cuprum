@@ -7,8 +7,8 @@ using Spectre.Console.Cli;
 using Spectre.Console;
 using System.Text.Json;
 using System.Net.Security;
-using static Cuprum.Functions;
-using static Cuprum.Classes;
+using static Cuprum.Utilities.Functions;
+using static Cuprum.Utilities.Classes;
 
 namespace Cuprum
 {
