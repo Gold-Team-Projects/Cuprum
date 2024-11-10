@@ -9,12 +9,28 @@ using System.Net.Sockets;
 using System.Text.Json;
 using System.Runtime.CompilerServices;
 using System.Linq.Expressions;
+using System.Net;
+using static Cuprum.Functions;
 
 namespace Cuprum.Utilities;
 
 internal class TCPPort 
 {
+    public int Port { get; set; }
+    public List<NetworkStream> Streams { get; set; } = new();
 
+	private TcpListener _listener;
+
+    internal TCPPort(int port)
+	{
+		Port = port;
+		
+        IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+		IPAddress ipAddr = ipHost.AddressList[0];
+		_listener = new TcpListener(ipAddr, port);
+
+
+	}
 }
 
 internal class TCPConnection
@@ -75,11 +91,17 @@ internal class TCPConnection
         return JsonSerializer.Deserialize<T>(json)!;
     }
 
-	public async Task<T> WaitForMessageAsync<T>()
+	public async Task<T> WaitForMessageAsync<T>(int timeoutMilliseconds = 5000)
 	{
 		var stream = _client.GetStream();
+		var startTime = DateTime.UtcNow;
+
 		while (!stream.DataAvailable)
 		{
+			if ((DateTime.UtcNow - startTime).TotalMilliseconds > timeoutMilliseconds)
+			{
+				throw new TimeoutException("Timed out waiting for message.");
+			}
 			await Task.Delay(50);
 		}
 		return ReadMessage<T>();

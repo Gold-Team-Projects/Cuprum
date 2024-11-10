@@ -9,17 +9,20 @@ namespace Cuprum.Messages
 {
 	internal class RequestMessage : Message
 	{
-		internal Dictionary<string, object> Parameters;
+		internal Dictionary<string, object> Parameters { get; set; }
+		internal RequestType ReqType { get; set; }
 
-		internal RequestMessage(BigInteger sender, BigInteger reciever, Dictionary<string, object> parameters)
+		internal RequestMessage(BigInteger sender, BigInteger reciever, Dictionary<string, object> parameters, RequestType type)
 		{
 			Initialize(sender, reciever, MessageType.Request);
 			Parameters = parameters;
+			ReqType = type;
 		}
 	}
 
 	internal enum RequestType
 	{
-		Join, Leave
+		Join, Leave,
+		Discovery
 	}
 }

@@ -37,7 +37,7 @@ namespace Cuprum
             BigInteger id = pong.Sender;
             ID = pong.Reciever;
 
-            conn.Write(new RequestMessage(ID, id, new()));
+            conn.Write(new RequestMessage(ID, id, new(), RequestType.Join));
             Message msg = conn.ReadMessage<Message>();
 
             if (msg.Type == MessageType.Error) throw new Exception("Network denied access: " + ((ErrorMessage)msg).Error);
@@ -53,8 +53,29 @@ namespace Cuprum
 
         internal async static Task Discover()
         {
+            foreach (KBucket bucket in Buckets)
+			{
+				foreach (string node in bucket.Nodes)
+				{
+					TCPConnection conn = new(node, 2031);
+                    conn.Write(new PingMessage(ID, ComputeKey(node)));
 
-        }
+                    try
+                    {
+                        PingMessage msg = await conn.WaitForMessageAsync<PingMessage>();
+                        conn.Write(new RequestMessage(ID, ComputeKey(node), new(), RequestType.Discovery));
+						BootstrapMessage response = conn.ReadMessage<BootstrapMessage>();
+
+						List<string> nodes = response.Nodes;
+						foreach (string n in nodes) AddNode(n);
+					}
+                    catch
+                    {
+						bucket.Nodes.Remove(node);
+					}
+				}
+			}
+		}
 
         internal static void AddNode(string ip)
         {
@@ -66,6 +87,5 @@ namespace Cuprum
     {
         public BigInteger ID { get; set; }
         public string IP { get; set; }
-
     }
 }

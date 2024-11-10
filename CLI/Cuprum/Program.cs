@@ -19,12 +19,8 @@ namespace Cuprum
             var app = new CommandApp();
             app.Configure(config =>
             {
-                config.AddBranch<NodeSettings>("node", add =>
-                {
-                    add.AddCommand<StartNodeCommand>("start");
-                    add.AddCommand<StopNodeCommand>("stop");
-                });
-                config.AddBranch<ClientSettings>("client", add =>
+                config.AddCommand<NodeCommand>("node");
+				config.AddBranch<ClientSettings>("client", add =>
                 {
                     add.AddCommand<ClientUICommand>("ui");
 					add.AddCommand<ClientCreateCommand>("create");
