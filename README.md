@@ -37,3 +37,14 @@ This pool is created to help stop token inflation and ensure $ENT maintains it's
 #### Platform Staker Pool
 Stakers are paid proportional to the amount staked.
 Staked currency is distrubted to the node operator pool and the game staker pool.
+
+## Network
+Cuprum nodes are responsible for validating transactions and securing the network.
+Nodes are rewarded with $ENT for their work.
+The network uses a hybrid PoH/PoA/PoS consensus mechanism to ensure security and decentralization.
+### Consensus
+Nodes reach consensus through a hybrid Proof of Authority and Proof of Stake mechanism. 
+Transactions are timestamped and ordered by a Proof of History mechanism.
+They are then validated through nodes selected via a Proof of Stake mechanism.
+### Governance
+We also use a DAO governance system to allow the community to vote on changes to the network.
